@@ -30,3 +30,4 @@ app.listen(port, () => {
     console.log("Server stared on PORT: " + port);
     
 })
+export default app;
