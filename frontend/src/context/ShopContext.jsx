@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import axois from 'axios'
+import axios from "axios";
 
 export const ShopContext = createContext()
 
@@ -73,7 +73,7 @@ const ShopContextProvider = (props) => {
 
         if (token) {
             try {
-                await axois.post(backendUrl + "/api/cart/update", { itemId, size, quantity }, { headers: { token } })
+                await axios.post(backendUrl + "/api/cart/update", { itemId, size, quantity }, { headers: { token } })
             } catch (error) {
                 console.log(error)
                 toast.error(error.message)
@@ -100,7 +100,7 @@ const ShopContextProvider = (props) => {
 
     const getProductsData = async () => {
         try {
-            const response = await axois.get(backendUrl + "/api/product/list")
+            const response = await axios.get(backendUrl + "/api/product/list")
             if (response.data.success) {
                 setProducts(response.data.products)
             } else {
