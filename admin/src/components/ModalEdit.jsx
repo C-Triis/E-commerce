@@ -110,7 +110,7 @@ const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchLi
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}
-      className="w-full max-w-3xl mx-auto mt-4 bg-gray-100 p-8 rounded-lg shadow-xl"
+      className="w-full max-w-3xl mx-auto mt-4 bg-gray-100 p-8 rounded-lg shadow-xl z-50"
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className='flex justify-between mb-4'>
         <h2 className='text-xl cursor-pointer font-semibold'>Edit Product</h2>
