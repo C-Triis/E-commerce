@@ -2,8 +2,6 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axois from 'axios'
-import axios from "axios";
-import { getUserCart } from "../../../backend/controllers/cartController";
 
 export const ShopContext = createContext()
 
@@ -11,7 +9,7 @@ const ShopContextProvider = (props) => {
 
     const currency = "$"
     const delivery_fee = 10
-    const backendUrl = import.meta.env.VITE_BACKEND_URL
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || "https://e-backend-indol.vercel.app"
 
     const [search, setSearch] = useState('')
     const [showSearch, setShowSearch] = useState(false)
