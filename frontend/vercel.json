@@ -10,7 +10,7 @@
         "use": "@vercel/node"
       }
     ],
-    "routes": [
+    "rewrites": [
       { "src": "/api/(.*)", "dest": "/backend/server.js" },
       { "src": "/(.*)", "dest": "/frontend/index.html" }
     ]
