@@ -25,6 +25,10 @@ app.get('/', (req, res) => {
     res.send("API working")
 })
 
+app.use('*', (req, res) => {
+    console.log('Unhandled route:', req.method, req.originalUrl);
+    res.status(404).json({ message: 'Route not found' });
+  });
 
 app.listen(port, () => {
     console.log("Server stared on PORT: " + port);
