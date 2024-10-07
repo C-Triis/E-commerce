@@ -7,6 +7,7 @@ import { assets } from '../assets/assets'
 Modal.setAppElement("#root")
 
 const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchList }) => {
+  //Trạng thái của sản phẩm
   const [editedProduct, setEditedProduct] = useState({
     name: '',
     description: '',
@@ -18,7 +19,7 @@ const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchLi
     imagesUrl: [],
     newImages: Array(4).fill(undefined)
   });
-
+  //Download dữ liệu sản phẩm
   useEffect(() => {
     if (product) {
       setEditedProduct({
@@ -34,7 +35,7 @@ const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchLi
       })
     }
   }, [product])
-
+  //Sử lý thôngtin từ ô input
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
     setEditedProduct((prev) => {
@@ -45,7 +46,7 @@ const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchLi
       return updatedProduct
     })
   }
-
+  //Xử lý Size 
   const handleSizeChange = (size) => {
     setEditedProduct((prev) => {
       const updatedSizes = prev.sizes.includes(size)
@@ -54,7 +55,7 @@ const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchLi
       return { ...prev, sizes: updatedSizes }
     })
   }
-
+  //Xử lý hình ảnh 
   const handleImageChange = (e, index) => {
     const file = e.target.files[0]
     setEditedProduct((prev) => {
@@ -67,8 +68,7 @@ const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchLi
       }
     })
   }
-
-
+    //Xử lý dữ liệu thông tin
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
@@ -110,10 +110,10 @@ const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchLi
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}
-      className="w-full max-w-3xl mx-auto mt-4 bg-gray-100 p-8 rounded-lg shadow-xl z-50"
+      className="w-full max-w-3xl mx-auto mt-2 bg-gray-100 py-4 px-8 rounded-lg shadow-xl z-50"
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className='flex justify-between mb-4'>
-        <h2 className='text-xl cursor-pointer font-semibold'>Edit Product</h2>
+      <div className='flex justify-between'>
+        <h2 className='text-xl cursor-pointer font-semibold mb-1'>Edit Product</h2>
         <p className='text-xl cursor-pointer font-bold text-gray-400 hover:text-gray-800' onClick={onRequestClose}>X</p>
       </div>
       <div>

@@ -7,16 +7,16 @@ import { toast } from "react-toastify"
 import { assets } from '../assets/assets'
 
 const Orders = ({ token }) => {
-
+  //Trạng thái đơn hàng
   const [orders, setOrders] = useState([])
-
+  //Tải tất cả đơn hàng
   const fetchAllOrders = async () => {
     if (!token) {
       return null
     }
-
     try {
       const response = await axois.post(backendUrl + '/api/order/list', {}, { headers: { token } })
+      //Nếu đơn hàng tải về thành công gán vào trạng thái setOrders
       if (response.data.success) {
         setOrders(response.data.orders)
       } else {
@@ -27,14 +27,14 @@ const Orders = ({ token }) => {
       toast.error(error.message)
     }
   }
-
+  //Cập nhật trạng thái đơn hàng
   const statusHandler = async (e, orderId) => {
     try {
       const response = await axois.post(backendUrl + '/api/order/status',
         { orderId, status: e.target.value }, { headers: { token } })
-        if(response.data.success){
-          await fetchAllOrders()
-        }
+      if (response.data.success) {
+        await fetchAllOrders()
+      }
     } catch (error) {
       console.log(error);
       toast.error(response.data.message)

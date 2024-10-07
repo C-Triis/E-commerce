@@ -6,8 +6,9 @@ import ProductItem from './ProductItem'
 const LatestCollection = () => {
 
     const { products } = useContext(ShopContext)
+    //Trạng thái sản phẩm
     const [latestProducts, setLatestProducts] = useState([])
-
+    //Lấy thông tin sản phẩm và lấy 10 sản phẩm
     useEffect(() => {
         setLatestProducts(products.slice(0, 10))
     }, [products])

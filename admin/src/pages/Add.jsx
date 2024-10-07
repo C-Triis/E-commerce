@@ -5,12 +5,12 @@ import { backendUrl } from '../App'
 import { toast } from 'react-toastify'
 
 const Add = ({token}) => {
-
+  //Trạng thái của hình ảnh
   const [image1, setImage1] = useState(false)
   const [image2, setImage2] = useState(false)
   const [image3, setImage3] = useState(false)
   const [image4, setImage4] = useState(false)
-
+  //Trạng thái của thông tin dữ liệu sản phẩm
   const [name, setName] = useState("")
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState("")
@@ -22,6 +22,7 @@ const Add = ({token}) => {
   const onSubmitHandler = async (e) => {
     e.preventDefault()
     try {
+      //Dùng gửi thông tin formData lên server
       const formData = new FormData()
       formData.append("name", name)
       formData.append("description", description)
@@ -35,7 +36,7 @@ const Add = ({token}) => {
       image2 && formData.append("image2", image2)
       image3 && formData.append("image3", image3)
       image4 && formData.append("image4", image4)
-
+      //Đường dẫn đưa thông tin lên server
       const response = await axois.post(backendUrl + "/api/product/add",  formData, {headers: {token}})
       
       if(response.data.success){

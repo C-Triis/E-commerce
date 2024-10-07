@@ -4,16 +4,18 @@ import { backendUrl } from '../App'
 import { toast } from 'react-toastify'
 
 const Login = ({ setToken }) => {
-
+    //Trang thái của email và password
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    //Gửi thông tin
     const onSubmitHandler = async (e) => {
         try {
             e.preventDefault()
+            //Set đường dẫn post dữ liệu
             const response = await axios.post(backendUrl + '/api/user/adminlogin', { email, password })
             console.log(response);
-
+            //Kiểm tra dữ liệu thông tin admin
             if (response.data.success) {
                 setToken(response.data.token)
                 toast.success("Log in successfully")

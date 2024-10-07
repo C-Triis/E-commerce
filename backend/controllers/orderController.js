@@ -1,7 +1,7 @@
 import orderModel from '../models/orderModel.js'
 import userModel from '../models/userModel.js'
 
-
+//Đặt hàng 
 const placeOrder = async (req, res) => {
     try {
         const { userId, items, amount, address } = req.body
@@ -15,10 +15,11 @@ const placeOrder = async (req, res) => {
             date: Date.now()
         }
 
+        //Tạo đơn hàng mới và lưu đơn hàng
         const newOrder = new orderModel(orderData)
         await newOrder.save()
 
-        await userModel.findByIdAndUpdate(userId, { cardData: {} })
+        await userModel.findByIdAndUpdate(userId, { cardData: {} }).lean()
         res.json({ success: true, message: "Order Placed" })
 
     } catch (error) {
@@ -27,9 +28,12 @@ const placeOrder = async (req, res) => {
     }
 }
 
+
+//Tất cả đơn hàng
 const allOrders = async (req, res) => {
     try {
-        const orders = await orderModel.find({})
+        //Tìm hết tất cả đơn hàng
+        const orders = await orderModel.find({}).lean()
         res.json({ success: true, orders })
     } catch (error) {
         console.log(error);
@@ -37,6 +41,8 @@ const allOrders = async (req, res) => {
     }
 }
 
+
+//Đơn hàng của người dùng
 const userOrders = async (req, res) => {
     try {
         const { userId } = req.body
@@ -48,10 +54,12 @@ const userOrders = async (req, res) => {
     }
 }
 
+
+//Cập nhật trạng thái của đơn hàng
 const updateStatus = async (req, res) => {
     try {
         const {orderId, status} = req.body
-        await orderModel.findByIdAndUpdate(orderId, {status})
+        await orderModel.findByIdAndUpdate(orderId, {status}).lean()
         res.json({success: true, message: "Status Updated"})
     } catch (error) {
         console.log(error)

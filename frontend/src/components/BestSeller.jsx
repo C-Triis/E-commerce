@@ -5,9 +5,10 @@ import ProductItem from './ProductItem'
 
 const BestSeller = () => {
 
+    //Lấy thông tin sản phẩm từ useContext
     const { products } = useContext(ShopContext)
     const [bestSeller, setBestSeller] = useState([])
-
+    //Lọc sản phẩm và lấy 5 sản phẩm đầu tiên
     useEffect(() => {
         const bestProduct = products.filter((item, index) => (item.bestseller))
         setBestSeller(bestProduct.slice(0, 5))

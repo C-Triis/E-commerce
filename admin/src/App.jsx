@@ -13,9 +13,9 @@ export const backendUrl = import.meta.env.VITE_BACKEND_URL
 export const currency = "$"
 
 const App = () => {
-
+  //Lấy token từ localStorage
   const [token, setToken] = useState(localStorage.getItem("token") ? localStorage.getItem("token") : "")
-
+  //Set token cho localStorage
   useEffect(() => {
     localStorage.setItem("token", token)
   }, [token])
@@ -29,7 +29,7 @@ const App = () => {
         <>
           <Navbar setToken={setToken} />
           <hr />
-          <div className='flex w-full mt-[60px]'>
+          <div className='flex w-full'>
             <Sidebar />
             <div className='w-[75%] mx-auto ml-[5vw,25px] my-8 text-gray-600 text-base'>
               <Routes>

@@ -4,10 +4,10 @@ import { NavLink, Link } from 'react-router-dom'
 import { ShopContext } from '../context/ShopContext'
 
 const Navbar = () => {
-
+    //Trạng thái của navbar khi responsive
     const [visible, setVisible] = useState(false)
     const { setShowSearch, getCartCount, navigate, token, setToken, setCartItems } = useContext(ShopContext)
-
+    //Đăng xuẩt và xoá token ở localStorage
     const logout = () => {
         navigate('/login')
         localStorage.removeItem("token")
