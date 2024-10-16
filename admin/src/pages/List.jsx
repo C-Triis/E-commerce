@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { currency } from '../App'
 import { assets } from '../assets/assets'
 import ModalEdit from '../components/ModalEdit'
+import ConfirmDeleteModal from '../components/ConfirmDeleteModal'
 
 const List = ({ token }) => {
   //Trạng thái danh sách
@@ -13,6 +14,9 @@ const List = ({ token }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false)
   //Trạng thái của sản phẩm ban đầu
   const [currentProduct, setCurrentProduct] = useState(null)
+  //Delete modal 
+  const [deleteModal, setDeleteModal] = useState(false)
+  const [selectedProductId, setSelectedProductId] = useState(null)
 
   //Lấy dữ liệu từ server về
   const fetchList = async () => {
@@ -38,10 +42,19 @@ const List = ({ token }) => {
     setModalIsOpen(false)
     setCurrentProduct(null)
   }
+  //Modal delete
+  const openDeleteModal = (id) => {
+    setDeleteModal(true)
+    setSelectedProductId(id)
+  }
+  const closeDeleteModal = () => {
+    setDeleteModal(false)
+    setSelectedProductId(null)
+  }
   //Xoá sản phẩm khỏi server
   const removeProduct = async (id) => {
     try {
-      const response = await axios.post(backendUrl + "/api/product/remove", { id }, { headers: { token } })
+      const response = await axios.post(backendUrl + "/api/product/remove", { id: selectedProductId }, { headers: { token } })
       if (response.data.success) {
         toast.success(response.data.message)
         //Tải lại dữ liệu khi xoá sản phẩm
@@ -52,6 +65,8 @@ const List = ({ token }) => {
     } catch (error) {
       console.log(error);
       toast.error(error.message)
+    } finally {
+      closeDeleteModal()
     }
   }
   //Tải dữ liệu sản phẩm
@@ -82,7 +97,7 @@ const List = ({ token }) => {
                 <img onClick={() => openModal(item)}
                   className='w-4 cursor-pointer'
                   src={assets.edit_icon} alt="" />
-                <p onClick={() => removeProduct(item._id)}
+                <p onClick={() => openDeleteModal(item._id)}
                   className='text-right md:text-center cursor-pointer text-lg'>X</p>
               </div>
             ))
@@ -100,6 +115,13 @@ const List = ({ token }) => {
             fetchList={fetchList}
           />
         )
+      }
+      {
+        <ConfirmDeleteModal
+          isOpen={deleteModal}
+          onRequestClose={closeDeleteModal}
+          onConfirm={removeProduct}
+        />
       }
     </div>
   )

@@ -32,7 +32,7 @@ const App = () => {
         <Route path='/orders' element={<Orders />} />
       </Routes>
       <Footer />
-      <ToastContainer position="bottom-right"/>
+      <ToastContainer position="bottom-right" />
     </div>
   )
 }

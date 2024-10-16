@@ -14,6 +14,20 @@ const Collection = () => {
   const [filterProducts, setFilterProducts] = useState([])
   const [sortType, setSortType] = useState("relavent")
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [productsPerPage] = useState(12)
+
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = filterProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+
+  const totalPages = Math.ceil(filterProducts.length / productsPerPage)
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber)
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
   const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
       setCategory((prev => prev.filter(item => item !== e.target.value)))
@@ -32,7 +46,7 @@ const Collection = () => {
 
   useEffect(() => {
     setFilterProducts(products)
-  }, [])
+  }, [products])
 
   const applyFilter = () => {
     let productsCopy = products.slice()
@@ -42,7 +56,7 @@ const Collection = () => {
     if (subCategory.length > 0) {
       productsCopy = productsCopy.filter(item => subCategory.includes(item.subCategory))
     }
-    if(showSearch && search){
+    if (showSearch && search) {
       productsCopy = productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
     }
     setFilterProducts(productsCopy)
@@ -126,7 +140,7 @@ const Collection = () => {
         </div>
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
           {
-            filterProducts.map((item, index) => (
+            currentProducts.map((item, index) => (
               <ProductItem
                 key={index}
                 name={item.name}
@@ -134,6 +148,18 @@ const Collection = () => {
                 price={item.price}
                 image={item.image}
               />
+            ))
+          }
+        </div>
+        <div className='mt-6 flex justify-center'>
+          {
+            Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`px-4 py-2 mx-1 rounded ${currentPage === index + 1 ? "bg-[#ffebf5] text-black" : ""}`}
+                onClick={() => handlePageChange(index + 1)}>
+                {index + 1}
+              </button>
             ))
           }
         </div>

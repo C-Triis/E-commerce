@@ -110,8 +110,8 @@ const ModalEdit = ({ isOpen, onRequestClose, product, token, backendUrl, fetchLi
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}
-      className="w-full max-w-3xl mx-auto mt-2 bg-gray-100 py-4 px-8 rounded-lg shadow-xl z-50"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      className="w-full max-w-3xl mx-auto mt-2 bg-gray-100 py-4 px-8 rounded-lg border-none"
+      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className='flex justify-between'>
         <h2 className='text-xl cursor-pointer font-semibold mb-1'>Edit Product</h2>
         <p className='text-xl cursor-pointer font-bold text-gray-400 hover:text-gray-800' onClick={onRequestClose}>X</p>

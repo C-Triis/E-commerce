@@ -7,16 +7,16 @@ import { toast } from 'react-toastify'
 const Orders = () => {
 
   const { backendUrl, currency, token } = useContext(ShopContext)
-  
+
   const [orderData, setOrderData] = useState([])
 
   const loadOrderData = async () => {
     try {
-      if(!token) {
+      if (!token) {
         return null
-      } 
-      const response = await axios.post(backendUrl + '/api/order/userorders', {}, {headers: {token}})
-      if(response.data.success) {
+      }
+      const response = await axios.post(backendUrl + '/api/order/userorders', {}, { headers: { token } })
+      if (response.data.success) {
         let allOrdersItem = []
         response.data.orders.map((order) => {
           order.items.map((item) => {
@@ -29,7 +29,7 @@ const Orders = () => {
         })
         setOrderData(allOrdersItem.reverse())
         console.log(allOrdersItem);
-        
+
       }
     } catch (error) {
       console.log(error)
@@ -69,7 +69,7 @@ const Orders = () => {
                   <p className='text-sm md:text-base'>{item.status}</p>
                 </div>
                 <button onClick={loadOrderData}
-                className='border px-4 py-2 text-sm font-medium rounded-sm'>Track Order</button>
+                  className='border px-4 py-2 text-sm font-medium rounded-sm'>Track Order</button>
               </div>
             </div>
           ))
