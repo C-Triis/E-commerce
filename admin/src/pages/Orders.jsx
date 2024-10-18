@@ -9,6 +9,15 @@ import { assets } from '../assets/assets'
 const Orders = ({ token }) => {
   //Trạng thái đơn hàng
   const [orders, setOrders] = useState([])
+  //Phân trang
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPage] = useState(5)
+  //Tính sản phẩm trang
+  const indexOfLastItem = currentPage * itemsPage
+  const indexOfFirstItem = indexOfLastItem - itemsPage
+  const currentItems = orders.slice(indexOfFirstItem, indexOfLastItem)
+  //Tổng số trang
+  const totalPages = Math.ceil(orders.length / itemsPage)
   //Tải tất cả đơn hàng
   const fetchAllOrders = async () => {
     if (!token) {
@@ -48,7 +57,7 @@ const Orders = ({ token }) => {
   return (
     <div>
       <h3 className='text-2xl font-medium mb-5'>Orders Page</h3>
-      <div className='max-h-[70vh] overflow-y-auto border border-gray-300 rounded-md p-4 scroll-smooth'>
+      <div>
         {
           orders.map((order, index) => (
             <div className='grid grid-cols-1 sm:grid-cols-[0.5fr_2fr_1fr] lg:grid-cols-[0.5fr_2fr_1fr_1fr_1fr] gap-3 items-start border-2 border-gray-200 p-5 md:p-8 my-3 md:my-4 text-sm text-gray-700' key={index}>
@@ -91,6 +100,21 @@ const Orders = ({ token }) => {
             </div>
           ))
         }
+      </div>
+      <div className='mt-10 justify-between flex'>
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage > 1 ? currentPage - 1 : 1)}
+          className='px-4 py-2 bg-[#ffebf5] text-gray-700 font-medium rounded disabled:bg-gray-400 disabled:text-white'>
+          Before
+        </button>
+        <p>Page {currentPage} / {totalPages}</p>
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(currentPage < totalPages ? currentPage + 1 : totalPages)}
+          className='px-4 py-2 bg-[#ffebf5] text-gray-700 font-medium rounded disabled:bg-gray-400 disabled:text-white'>
+          After
+        </button>
       </div>
     </div>
   )

@@ -33,7 +33,7 @@ const placeOrder = async (req, res) => {
 const allOrders = async (req, res) => {
     try {
         //Tìm hết tất cả đơn hàng
-        const orders = await orderModel.find({}).lean()
+        const orders = await orderModel.find({}).sort({ date: -1 }).lean()
         res.json({ success: true, orders })
     } catch (error) {
         console.log(error);
